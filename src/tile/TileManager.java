@@ -54,15 +54,21 @@ public class TileManager {
             g2.drawImage(tiles[2].image, i, (gp.maxScreenRow*gp.tileSize)-gp.tileSize, gp.tileSize, gp.tileSize, null);
         }
 
-
+        int counter = 0;
         for(int i = gp.tileSize ; i < (gp.maxScreenRow * gp.tileSize) - gp.tileSize ; i += gp.tileSize) {
-            int counter = 0;
 
-            for (int j = gp.tileSize; j < ( gp.tileSize * gp.maxScreenColumn )- gp.tileSize; j += 2 * gp.tileSize) {
-                g2.drawImage(tiles[0].image, j, i, gp.tileSize, gp.tileSize, null);
-                g2.drawImage(tiles[1].image, j+gp.tileSize, i, gp.tileSize, gp.tileSize, null);
-
+            for (int j = gp.tileSize; j < ( gp.tileSize * gp.maxScreenColumn )- gp.tileSize; j += gp.tileSize) {
+                if( counter % 2 == 0)
+                {
+                    g2.drawImage(tiles[0].image, j, i, gp.tileSize, gp.tileSize, null);
+                }
+                if(counter % 2 != 0)
+                {
+                    g2.drawImage(tiles[1].image, j , i, gp.tileSize, gp.tileSize, null);
+                }
+                counter++;
             }
+            counter++;
         }
     }
 
