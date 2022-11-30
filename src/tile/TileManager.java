@@ -19,11 +19,11 @@ public class TileManager {
 
         tiles = new Tile[10];
 
-        mapTileNum = new int [gp.maxScreenColumn] [gp.maxScreenRow];
+        mapTileNum = new int [gp.maxWorldCol] [gp.maxWorldRow];
 
         getTileImage();
 
-        loadMap("/Maps/Mapx1.txt");
+        loadMap("/Maps/WorldMap.txt");
     }
 
     public void getTileImage() {
@@ -42,8 +42,8 @@ public class TileManager {
             tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Sand.png"));
             tiles[6] = new Tile();
             tiles[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Tree.png"));
-            tiles[6] = new Tile();
-            tiles[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Grass.png"));
+            tiles[7] = new Tile();
+            tiles[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Grass.png"));
 
 
         } catch (IOException e) {
@@ -51,19 +51,21 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath){
-        try{
+    public void loadMap(String filePath)
+    {
+        try
+        {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
             int row = 0;
 
-            while(col < gp.maxScreenColumn && row < gp.maxScreenRow)
+            while(col < gp.maxWorldCol && row < gp.maxWorldRow)
             {
                 String line = br.readLine();
 
-                while(col < gp.maxScreenColumn)
+                while(col < gp.maxWorldCol)
                 {
                     String numbers[] = line.split(" ");
 
@@ -72,7 +74,7 @@ public class TileManager {
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if(col == gp.maxScreenColumn)
+                if(col == gp.maxWorldCol)
                 {
                     col = 0;
                     row++;
@@ -84,25 +86,40 @@ public class TileManager {
         {
         }
     }
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2)
+    {
         //2-Dimensional Array method
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldCol = 0;
+        int worldRow = 0;
 
-        while (col < gp.maxScreenColumn && row < gp.maxScreenRow) {
 
-            int tileNum = mapTileNum[col][row];
+        //while loop drawing tiles
+        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow)
+        {
 
-            g2.drawImage(tiles[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
-            col++;
-            x += gp.tileSize;
-            if (col == gp.maxScreenColumn) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.tileSize;
+            int tileNum = mapTileNum[worldCol][worldRow];
+
+            //eg. world X = 0 * 16 ,, 1*16 ,, 2*16 ...
+            int worldX = worldCol * gp.tileSize;
+            //eg. world X = 0 * 16 ,, 1*16 ,, 2*16 ...
+            int worldY = worldRow * gp.tileSize;
+            //Offset camera, so player is in the middle
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+            //only draw the tiles we see + 1
+                 if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                    worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                    worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                    worldY - gp.tileSize < gp.player.worldY + gp.player.screenY)
+            {
+                g2.drawImage(tiles[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            }
+
+            worldCol++;
+            if (worldCol == gp.maxWorldCol) {
+                worldCol = 0;
+                worldRow++;
             }
         }
 

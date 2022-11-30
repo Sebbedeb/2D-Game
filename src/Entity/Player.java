@@ -25,6 +25,7 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
+
         screenY = gp.screenHeight/2 - (gp.tileSize/2);;
 
         setDefaulValues();
