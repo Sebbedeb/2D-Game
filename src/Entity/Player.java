@@ -53,10 +53,10 @@ public class Player extends Entity{
         }
     }
     public void setDefaulValues () {
-        worldX = gp.tileSize * 12;
-        worldY = gp.tileSize * 40;
+        worldX = gp.tileSize * 36;
+        worldY = gp.tileSize * 8;
         speed = 4;
-        direction="down";
+        direction="up";
     }
     public void update(){
         if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
