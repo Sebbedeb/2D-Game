@@ -1,11 +1,11 @@
-package Main;
+package main;
 
-import Entity.Player;
+import entity.Player;
 import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
-
+import object.SuperObject;
 public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
@@ -31,7 +31,13 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+
+    public CollisionChecker cChecker = new CollisionChecker(this);
+
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    public SuperObject obj[] = new SuperObject[10];
+
 
     public GamePanel()
     {
@@ -42,6 +48,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
 
     }
+    public void setupGame()
+    {
+        aSetter.setObject();
+    }
 
     public void startGameThread()
     {
@@ -50,10 +60,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         // DELTA METHOD
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -61,8 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
         int drawCount = 0;
 
 
-        while(gameThread != null)
-        {
+        while (gameThread != null) {
 
             //Check system time
             currentTime = System.nanoTime();
@@ -76,64 +84,18 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             //When delta = drawInterval we update and repaint , then reset delta
-            if(delta >= 1)
-            {
+            if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
                 drawCount++;
             }
-            if(timer >= 1000000000)
-            {
+            if (timer >= 1000000000) {
                 System.out.println("FPS : " + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
         }
-
-
-
-
-
-
-
-        /* METHOD 1 : MEASURE VIA SYSTEM TIME
-        //We measure time in nanoseconds for accuracy (overkill)
-        //1 second is 1b nanoseconds
-        //we divide 1b (1 nanosecond) with our FPS = we update every 0.016 sec
-        double drawInterval = 1000000000/FPS;
-        double nextDrawTime = System.nanoTime() + drawInterval;
-
-        while(gameThread != null)
-        {
-            // 1 UPDATE: update information such as character position
-            update();
-
-            // 2 DRAW:  draw the screen with the updated
-            repaint();
-
-
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                //Since Thread.sleep takes milliseconds, we convert from nano to milli
-                remainingTime = remainingTime/1000000;
-                //Since Thread.sleep takes a long, we convert from double to long
-;
-
-                if(remainingTime < 0 ){
-                    remainingTime=0;
-                }
-
-                Thread.sleep((long) remainingTime);
-
-                nextDrawTime += drawInterval;
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-         */
     }
 
     public void update(){
@@ -146,8 +108,19 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
+        //TILE DRAWER
         tileM.draw(g2);
+        //OBJECT DRAWER
+        for(int i = 0; i < obj.length; i++)
+        {
+            if(obj[i] != null)
+            {
+                obj[i].draw(g2,this);
+            }
+        }
+        //PLAYER DRAWER
         player.draw(g2);
+
 
         g2.dispose();
     }

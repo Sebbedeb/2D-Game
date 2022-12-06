@@ -1,7 +1,7 @@
-package Entity;
+package entity;
 
-import Main.GamePanel;
-import Main.KeyHandler;
+import main.GamePanel;
+import main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,8 +25,15 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);;
+        solidArea= new Rectangle();
+        solidArea.x = (int) (gp.tileSize*0.4);
+        solidArea.y = (int) (gp.tileSize*0.4);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = (int) (gp.tileSize*0.4);
+        solidArea.height = (int) (gp.tileSize*0.6);
 
         setDefaulValues();
         getPlayerImage();
@@ -59,25 +66,51 @@ public class Player extends Entity{
         direction="up";
     }
     public void update(){
-        if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            spriteCounter++;
-            if (keyH.upPressed) {
+        if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed)
+        {
+            if (keyH.upPressed)
+            {
                 direction = "up";
-                worldY -= speed;
-            } else if (keyH.downPressed) {
+
+            } else if (keyH.downPressed)
+            {
                 direction = "down";
-                worldY += speed;
-            } else if (keyH.leftPressed) {
+
+            } else if (keyH.leftPressed)
+            {
                 direction = "left";
-                worldX -= speed;
-            } else if (keyH.rightPressed) {
+
+            } else if (keyH.rightPressed)
+            {
                 direction = "right";
-                worldX += speed;
             }
-            if (spriteCounter > 12) {
-                if (spriteNumber == 1) {
+
+            //CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            //CHECK OBJECT COLLISION
+            int objectIndex = gp.cChecker.checkObject(this, true);
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(collisionOn == false)
+            {
+                switch (direction)
+                {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+
+            spriteCounter++;
+            if (spriteCounter > 12)
+            {
+                if (spriteNumber == 1)
+                {
                     spriteNumber = 2;
-                } else if (spriteNumber == 2) {
+                } else if (spriteNumber == 2)
+                {
                     spriteNumber = 1;
                 }
                 spriteCounter = 0;

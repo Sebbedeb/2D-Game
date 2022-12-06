@@ -1,6 +1,6 @@
 package tile;
 
-import Main.GamePanel;
+import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tiles;
-    int mapTileNum[][];
+    public Tile[] tiles;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -23,29 +23,41 @@ public class TileManager {
 
         getTileImage();
 
-        loadMap("/Maps/WorldMap1.txt");
+        loadMap("/maps/WorldMap1.txt");
     }
 
     public void getTileImage() {
         try {
             tiles[0] = new Tile();
             tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Floor.png"));
+
             tiles[1] = new Tile();
             tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Floor 2.png"));
+
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Wall.png"));
+            tiles[2].collision = true;
+
             tiles[3] = new Tile();
             tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Door.png"));
+
             tiles[4] = new Tile();
             tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dirt.png"));
+
             tiles[5] = new Tile();
             tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Sand.png"));
+
             tiles[6] = new Tile();
             tiles[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Tree.png"));
+            tiles[6].collision = true;
+
             tiles[7] = new Tile();
             tiles[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Grass.png"));
+
             tiles[8] = new Tile();
             tiles[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Water.png"));
+            tiles[8].collision = true;
+
             tiles[9] = new Tile();
             tiles[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Path.png"));
 
