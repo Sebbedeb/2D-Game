@@ -10,7 +10,7 @@ public class OBJSign extends SuperObject{
         name= "Sign";
         try
         {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/Sign.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/JesperFrontSmoke1.png"));
         }
         catch (IOException e)
         {

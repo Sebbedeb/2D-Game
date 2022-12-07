@@ -132,6 +132,7 @@ public class Player extends Entity{
             {
                 case "Temp" :
                     hasTemp++;
+                    gp.playSE(1);
                     gp.obj[i] = null;
                     break;
                 case "Computer" :
@@ -140,7 +141,7 @@ public class Player extends Entity{
                 case "Sign" :
                     if(hasTemp > 0)
                     {
-                        System.out.println("you have entered the temp");
+                        gp.playSE(2);
                         hasTemp--;
                     }
                     break;

@@ -2,7 +2,7 @@ package main;
 
 import object.OBJComputer;
 import object.OBJSign;
-import object.OBJTemp;
+import object.OBJTicket;
 
 public class AssetSetter
 {
@@ -21,7 +21,7 @@ public class AssetSetter
         gp.obj[1].worldX = 41 * gp.tileSize;
         gp.obj[1].worldY = 20 * gp.tileSize;
 
-        gp.obj[2] = new OBJTemp();
+        gp.obj[2] = new OBJTicket();
         gp.obj[2].worldX = 8 * gp.tileSize;
         gp.obj[2].worldY = 25 * gp.tileSize;
     }
