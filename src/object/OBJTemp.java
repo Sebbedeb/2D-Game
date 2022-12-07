@@ -8,7 +8,7 @@ import java.io.IOException;
 public class OBJTemp extends SuperObject{
     public OBJTemp()
     {
-        name = "temp";
+        name = "Temp";
 
         try
         {

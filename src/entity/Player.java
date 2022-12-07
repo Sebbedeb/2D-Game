@@ -18,6 +18,8 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
+    public int hasTemp;
+
 
     public Player(GamePanel gp, KeyHandler keyH)
     {
@@ -91,6 +93,8 @@ public class Player extends Entity{
 
             //CHECK OBJECT COLLISION
             int objectIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objectIndex);
+
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false)
             {
@@ -114,6 +118,32 @@ public class Player extends Entity{
                     spriteNumber = 1;
                 }
                 spriteCounter = 0;
+            }
+        }
+
+    }
+
+    public void pickUpObject(int i)
+    {
+        if (i != 999)
+        {
+            String objectName = gp.obj[i].name;
+            switch(objectName)
+            {
+                case "Temp" :
+                    hasTemp++;
+                    gp.obj[i] = null;
+                    break;
+                case "Computer" :
+                    System.out.println("This is your PC");
+                    break;
+                case "Sign" :
+                    if(hasTemp > 0)
+                    {
+                        System.out.println("you have entered the temp");
+                        hasTemp--;
+                    }
+                    break;
             }
         }
 
