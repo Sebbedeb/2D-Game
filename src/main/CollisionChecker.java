@@ -78,7 +78,8 @@ public class CollisionChecker
                 gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
                 gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
 
-                switch (entity.direction) {
+                switch (entity.direction)
+                {
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {

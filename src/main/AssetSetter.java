@@ -1,12 +1,13 @@
 package main;
 
 import object.OBJComputer;
+import object.OBJRAM;
 import object.OBJSign;
 import object.OBJTicket;
 
 public class AssetSetter
 {
-    GamePanel gp;
+    private GamePanel gp;
     public AssetSetter(GamePanel gp)
     {
         this.gp=gp;
@@ -24,5 +25,9 @@ public class AssetSetter
         gp.obj[2] = new OBJTicket();
         gp.obj[2].worldX = 8 * gp.tileSize;
         gp.obj[2].worldY = 25 * gp.tileSize;
+
+        gp.obj[3]=new OBJRAM();
+        gp.obj[3].worldX = 38 * gp.tileSize;
+        gp.obj[3].worldY = 40 * gp.tileSize;
     }
 }

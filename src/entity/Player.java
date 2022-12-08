@@ -17,8 +17,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
-
-    public int hasTemp;
+    public int hasTicket;
 
 
     public Player(GamePanel gp, KeyHandler keyH)
@@ -131,20 +130,23 @@ public class Player extends Entity{
             switch(objectName)
             {
                 case "Temp" :
-                    hasTemp++;
+                    hasTicket++;
                     gp.playSE(1);
                     gp.obj[i] = null;
                     break;
                 case "Computer" :
-                    System.out.println("This is your PC");
                     break;
                 case "Sign" :
-                    if(hasTemp > 0)
+                    if(hasTicket > 0)
                     {
                         gp.playSE(2);
-                        hasTemp--;
+
+                        hasTicket--;
                     }
                     break;
+                case "RAM" :
+                    speed += 2;
+                    gp.obj[i] = null;
             }
         }
 

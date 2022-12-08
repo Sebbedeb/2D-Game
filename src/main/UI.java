@@ -13,13 +13,11 @@ public class UI
 {
 
     GamePanel gp;
-    Font arial_40;
     Font arial_BOLD_40;
     BufferedImage tempImage;
     public UI(GamePanel gp)
     {
         this.gp = gp;
-        arial_40 = new Font("Arial" , Font.PLAIN , 40);
         arial_BOLD_40 = new Font("Arial" , Font.BOLD , 40);
         OBJTicket ticket = new OBJTicket();
         tempImage = ticket.image;
@@ -30,7 +28,6 @@ public class UI
         g2.setFont(arial_BOLD_40);
         g2.setColor(Color.white);
         g2.drawImage(tempImage , gp.tileSize/2 , gp.tileSize/2 , gp.tileSize, gp.tileSize, null);
-        g2.drawString("x = "+ gp.player.hasTemp, 74, 60);
-
+        g2.drawString("Your inventory is full x = "+ gp.player.hasTicket, 74, 60);
     }
 }

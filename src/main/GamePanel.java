@@ -9,8 +9,8 @@ import object.SuperObject;
 public class GamePanel extends JPanel implements Runnable{
 
     //SCREEN SETTINGS
-    final int originalTileSize = 16; // 16*16 pixel tile
-    final int scale = 3;
+    private final int originalTileSize = 16; // 16*16 pixel tile
+    private final int scale = 3;
     public final int tileSize = originalTileSize * scale; //48*48 pixel tile
 
     public final int maxScreenColumn = 16;
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxWorldRow = 50;
 
     //FPS
-    int FPS = 60;
+    private int FPS = 60;
 
 
     //SYSTEM
@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     Sound music = new Sound();
     Sound se = new Sound();
-
 
     public CollisionChecker cChecker = new CollisionChecker(this);
 
@@ -111,7 +110,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         player.update();
-
     }
 
     public void paintComponent(Graphics g){

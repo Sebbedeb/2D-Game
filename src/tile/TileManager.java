@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager {
+public class TileManager
+{
     GamePanel gp;
     public Tile[] tiles;
     public int mapTileNum[][];
@@ -36,7 +37,7 @@ public class TileManager {
 
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Wall.png"));
-            tiles[2].collision = true;
+
 
             tiles[3] = new Tile();
             tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dungeon Door.png"));
@@ -100,6 +101,7 @@ public class TileManager {
         }
         catch(Exception e)
         {
+            e.printStackTrace();
         }
     }
     public void draw(Graphics2D g2)
