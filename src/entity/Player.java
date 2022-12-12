@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasTicket;
+    public int jesperQuestComplete = 0;
 
 
     public Player(GamePanel gp, KeyHandler keyH)
@@ -42,23 +44,28 @@ public class Player extends Entity{
 
     public void getPlayerImage()
     {
+        up1 = setup("Player Up1");
+        up2 = setup("Player Up2");
+        down1 = setup("Player down1");
+        down2 = setup("Player down2");
+        left1 = setup("Player Left1");
+        left2= setup("Player Left2");
+        right1= setup("Player Right1");
+        right2= setup("Player Right2");
+    }
+    public BufferedImage setup(String imageName)
+    {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
         try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/Player Up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/Player Up2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/player/Player Up3.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/Player down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/Player down2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/player/Player down3.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/Player Left1.png"));
-            left2= ImageIO.read(getClass().getResourceAsStream("/player/Player Left2.png"));
-            right1= ImageIO.read(getClass().getResourceAsStream("/player/Player Right1.png"));
-            right2= ImageIO.read(getClass().getResourceAsStream("/player/Player Right2.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/player/"+ imageName +".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
 
-
-        }
-        catch(IOException e){
+        }catch(IOException e)
+        {
             e.printStackTrace();
         }
+        return image;
     }
     public void setDefaulValues () {
         worldX = gp.tileSize * 36;
@@ -129,19 +136,32 @@ public class Player extends Entity{
             String objectName = gp.obj[i].name;
             switch(objectName)
             {
-                case "Temp" :
+                case "ticket" :
                     hasTicket++;
                     gp.playSE(1);
                     gp.obj[i] = null;
+                    gp.ui.showMessage("You got the ticket!");
                     break;
-                case "Computer" :
+                case "computer" :
+                if(jesperQuestComplete == 1)
+                {
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSE(2);
+                }
                     break;
-                case "Sign" :
+                case "sign" :
                     if(hasTicket > 0)
                     {
                         gp.playSE(2);
-
+                        gp.ui.showMessage("You gave Jesper the ticket!");
                         hasTicket--;
+                        jesperQuestComplete++;
+                        gp.obj[1] = null;
+                    }
+                    else
+                    {
+                        gp.ui.showMessage("You need to find the ticket!");
                     }
                     break;
                 case "RAM" :
@@ -198,6 +218,6 @@ public class Player extends Entity{
                     break;
             }
 
-            g2.drawImage(image, screenX, screenY, gp.tileSize,gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, null);
         }
 }

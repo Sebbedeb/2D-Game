@@ -1,16 +1,20 @@
 package object;
 
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class OBJSign extends SuperObject{
 
-    public OBJSign()
+    GamePanel gp;
+    public OBJSign(GamePanel gp)
     {
-        name= "Sign";
+        name= "sign";
         try
         {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/JesperFrontSmoke1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/Sign.png"));
+            uTool.scaleImage(image , gp.tileSize , gp.tileSize);
         }
         catch (IOException e)
         {
