@@ -18,8 +18,8 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
-    public int hasTicket;
-    public int jesperQuestComplete = 0;
+//    public int hasTicket;
+//    public int jesperQuestComplete = 0;
 
 
     public Player(GamePanel gp, KeyHandler keyH)
@@ -133,41 +133,6 @@ public class Player extends Entity{
     {
         if (i != 999)
         {
-            String objectName = gp.obj[i].name;
-            switch(objectName)
-            {
-                case "ticket" :
-                    hasTicket++;
-                    gp.playSE(1);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got the ticket!");
-                    break;
-                case "computer" :
-                if(jesperQuestComplete == 1)
-                {
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSE(2);
-                }
-                    break;
-                case "sign" :
-                    if(hasTicket > 0)
-                    {
-                        gp.playSE(2);
-                        gp.ui.showMessage("You gave Jesper the ticket!");
-                        hasTicket--;
-                        jesperQuestComplete++;
-                        gp.obj[1] = null;
-                    }
-                    else
-                    {
-                        gp.ui.showMessage("You need to find the ticket!");
-                    }
-                    break;
-                case "RAM" :
-                    speed += 2;
-                    gp.obj[i] = null;
-            }
         }
 
     }
