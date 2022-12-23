@@ -18,7 +18,7 @@ public class NPC_Jesper extends Entity
     public void setDefault()
     {
         direction = "down";
-        speed = 4;
+        speed = 2;
     }
 
     public void getImage()
@@ -35,9 +35,6 @@ public class NPC_Jesper extends Entity
 
     public void setAction()
     {
-        actionLockCounter++;
-        if (actionLockCounter == 120)
-        {
             Random random = new Random();
             int i = random.nextInt(100) + 1; //Pick a random number from 1 to 100
             if (i <= 25)
@@ -56,7 +53,5 @@ public class NPC_Jesper extends Entity
             {
                 direction = "right";
             }
-        }
-        actionLockCounter = 0;
     }
 }
