@@ -52,23 +52,27 @@ public class Player extends Entity{
         direction="up";
     }
     public void update(){
-        if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed)
+        if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.ePressed)
         {
             if (keyH.upPressed)
             {
                 direction = "up";
+                moving = true;
 
             } else if (keyH.downPressed)
             {
                 direction = "down";
+                moving = true;
 
             } else if (keyH.leftPressed)
             {
                 direction = "left";
+                moving = true;
 
             } else if (keyH.rightPressed)
             {
                 direction = "right";
+                moving = true;
             }
 
             //CHECK TILE COLLISION
@@ -79,8 +83,12 @@ public class Player extends Entity{
             int objectIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objectIndex);
 
+            //CHECK NPC COLLISION
+            int NPCIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(NPCIndex);
+
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false)
+            if(!collisionOn && !keyH.ePressed && moving)
             {
                 switch (direction)
                 {
@@ -90,6 +98,8 @@ public class Player extends Entity{
                     case "right": worldX += speed; break;
                 }
             }
+            moving = false;
+            gp.keyH.ePressed = false;
 
             spriteCounter++;
             if (spriteCounter > 12)
@@ -104,7 +114,19 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
+    }
 
+    private void interactNPC(int i)
+    {
+        if (i != 999)
+        {
+            if (gp.keyH.ePressed)
+            {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
+        }
+        gp.keyH.ePressed = false;
     }
 
     public void pickUpObject(int i)

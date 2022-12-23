@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed;
     //DEBUG
     boolean checkDrawTime;
     GamePanel gp;
@@ -23,34 +23,63 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        //PLAYSTATE
+        if(gp.gameState == gp.playState)
+        {
 
-        if(code == KeyEvent.VK_W) {upPressed=true;}
-        if(code == KeyEvent.VK_S) {downPressed=true;}
-        if(code == KeyEvent.VK_A) {leftPressed=true;}
-        if(code == KeyEvent.VK_D) {rightPressed=true;}
-        if(code == KeyEvent.VK_P){
-            if(gp.gameState == gp.playState)
+            if (code == KeyEvent.VK_W)
             {
-                gp.gameState = gp.pauseState;
+                upPressed = true;
             }
-            else if(gp.gameState == gp.pauseState)
+            if (code == KeyEvent.VK_S)
             {
-                gp.gameState = gp. playState;
+                downPressed = true;
+            }
+            if (code == KeyEvent.VK_A)
+            {
+                leftPressed = true;
+            }
+            if (code == KeyEvent.VK_D)
+            {
+                rightPressed = true;
+            }
+            if (code == KeyEvent.VK_P)
+            {
+                    gp.gameState = gp.pauseState;
+            }
+            if(code == KeyEvent.VK_E)
+            {
+                ePressed = true;
+            }
+            if (code == KeyEvent.VK_T)
+            {
+                if (checkDrawTime == false)
+                {
+                    checkDrawTime = true;
+                } else if (checkDrawTime == true)
+                {
+                    checkDrawTime = false;
+                }
+
             }
         }
-        if(code == KeyEvent.VK_T){
-            if(checkDrawTime == false)
+        //PAUSESTATE
+        else if(gp.gameState == gp.pauseState)
+        {
+            if (code == KeyEvent.VK_P)
             {
-                checkDrawTime = true;
+                gp.gameState = gp.playState;
             }
-            else if(checkDrawTime==true)
-            {
-                checkDrawTime = false;
-            }
-
         }
 
-
+        //DIALOGUESTATE
+        if(gp.gameState == gp.dialogueState)
+        {
+            if(code == KeyEvent.VK_E)
+            {
+                gp.gameState = gp.playState;
+            }
+        }
     }
 
     @Override
@@ -62,6 +91,7 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_S) {downPressed = false;}
         if(code == KeyEvent.VK_A) {leftPressed=false;}
         if(code == KeyEvent.VK_D) {rightPressed=false;}
+        if(code == KeyEvent.VK_E) {ePressed=false;}
 
     }
 }
