@@ -58,6 +58,11 @@ public class UI
         g2.setColor(Color.white);
 
 
+        //TITLESTATE
+        if(gp.gameState == gp.titleState)
+        {
+            drawTitleScreen();
+        }
         //PLAYSTATE
         if(gp.gameState == gp.playState)
         {
@@ -77,6 +82,35 @@ public class UI
             drawDialogueScreen();
         }
 
+    }
+
+    private void drawTitleScreen()
+    {
+        //BACKGROUND COLOR
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+        //TITLE NAME
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "Første \nSemester";
+        String[] line = text.split("\n");
+        int x = getXForCenteredText(line[0]);
+        int y = gp.tileSize * 2;
+        int x1 = getXForCenteredText(line[1]);
+        int y1= gp.tileSize * 4;
+        //SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(line[0], x+5 , y+5);
+        g2.drawString(line[1], x1+5 , y1+5);
+        //MAIN
+        g2.setColor(Color.white);
+        g2.drawString(line[0], x, y);
+        g2.drawString(line[1], x1, y1);
+
+        //PLAYER IMAGE
+        x = gp.screenWidth/2 - gp.tileSize;
+        y = y1 + gp.tileSize * 2;
+        g2.drawImage(gp.player.down1, x , y , gp.tileSize*2 , gp.tileSize*2 , null);
     }
     public void drawPauseScreen()
     {
