@@ -50,6 +50,9 @@ public class Player extends Entity{
         worldY = gp.tileSize * 8;
         speed = 4;
         direction="up";
+
+        maxLife = 6;
+        life = maxLife;
     }
     public void update(){
         if( keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.ePressed)
@@ -86,6 +89,9 @@ public class Player extends Entity{
             //CHECK NPC COLLISION
             int NPCIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(NPCIndex);
+
+            //CHECK EVENT
+            gp.eHandler.checkEvent();
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn && !keyH.ePressed && moving)

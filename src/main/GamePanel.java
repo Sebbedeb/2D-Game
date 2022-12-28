@@ -6,11 +6,8 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 import object.SuperObject;
-
-import static java.awt.event.KeyEvent.VK_E;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -46,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter aSetter = new AssetSetter(this);
 
     public UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
     Thread gameThread;
 
     //ENTITY AND OBJECT
@@ -76,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
     {
         aSetter.setObject();
         aSetter.setNPC();
-        //playMusic(0);
+        playMusic(0);
         gameState = titleState;
     }
 
